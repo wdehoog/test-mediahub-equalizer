@@ -6,7 +6,8 @@
 #include <QDBusConnectionInterface>
 #include <QDBusInterface>
 
-MediaHubHelper::MediaHubHelper() {
+MediaHubHelper::MediaHubHelper(QObject* parent)
+  : QObject(parent) {
     auto connection = QDBusConnection::sessionBus();
     auto interface = connection.interface();
     interface->startService(QStringLiteral("core.ubuntu.media.Service"));
@@ -16,8 +17,16 @@ MediaHubHelper::MediaHubHelper() {
                                        QStringLiteral("core.ubuntu.media.Service"),
                                        connection, this);
 
-    connect(dbus_mediahub, SIGNAL(EqualizerBandChanged(int band, double gain)),
-            this, SLOT(onEqualizerBandChanged(int band, double gain)));
+    //connect(dbus_mediahub, SIGNAL(EqualizerBandChanged(int band, double gain)),
+    //        this, SLOT(onEqualizerBandChanged(int band, double gain)));
+
+    dbus_mediahub->connection()
+      .connect(QStringLiteral("core.ubuntu.media.Service"),
+               QStringLiteral("/core/ubuntu/media/Service"),
+               QStringLiteral("core.ubuntu.media.Service"),
+               QStringLiteral("EqualizerBandChanged"),
+               this,
+               SLOT(onEqualizerBandChanged(int, double)));
 }
 
 const QString MediaHubHelper::getEqualizerBands() {

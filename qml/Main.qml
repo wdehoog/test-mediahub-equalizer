@@ -79,7 +79,7 @@ MainView {
                             modifiedBands[i] = equalizerBands[i]
                             console.log("read gain[" + i + "]: " + equalizerBands[i])
                         }
-                        // counter++
+                        counter++
                     }
                 }
                 Button {

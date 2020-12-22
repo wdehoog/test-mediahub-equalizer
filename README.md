@@ -1,6 +1,6 @@
 # TestEqualizer
 
-A short description of your app
+Test Equalizer in media-hub.
 
 ## License
 

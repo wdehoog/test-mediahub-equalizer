@@ -9,7 +9,7 @@ class MediaHubHelper: public QObject {
     Q_OBJECT
 
 public:
-    MediaHubHelper();
+    explicit MediaHubHelper(QObject *parent = 0);
     ~MediaHubHelper() = default;
 
     Q_INVOKABLE const QString getEqualizerBands();
